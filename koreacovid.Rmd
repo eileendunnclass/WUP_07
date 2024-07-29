@@ -37,10 +37,15 @@ state of a patient must be died or alive - we adjust that as well
 results is a categorical variable, sex is categorical  
 result depends on sex'we use helper file cat~cat  
 
+#Results 
 
 ## Graphical results - use ggplot commands to do this  
 
+```{r}
+barchartGC(~result + Sex,data=KRdata)
+barchartGC(~result + Sex,data=KRdata, type="percent")
 
+```
 
   
 
