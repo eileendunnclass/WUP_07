@@ -21,6 +21,7 @@ mutate(across(where(is.character), as.factor))
 
 # Introduction  
 
+There will be data and statistics to determine if there is a correlation between gender and deaths in Korea.  
 
 ### Data is from the Patient_Info dataset from South Korea 1 Jan to 1 May 2020
 ### This data was retrieved from a downloadable zip file from kaggle
@@ -31,36 +32,53 @@ state of a patient must be died or alive - we adjust that as well
   
 # Your Question - Is dying independent of sex?
 
+$H_0$: There is no difference when dying because of sex when it comes to Covid in Korea.    
+
+$H_A$: There is a difference when dying because of sex when it comes to Covid in Korea.    
 
 # Methods
 
 results is a categorical variable, sex is categorical  
 result depends on sex'we use helper file cat~cat  
 
-#Results 
+# Results 
 
 ## Graphical results - use ggplot commands to do this  
 
 ```{r}
-barchartGC(~result + Sex,data=KRdata)
-barchartGC(~result + Sex,data=KRdata, type="percent")
+barchartGC(~result + Sex,data=kRdata)
 
 ```
 
-  
+```{r}
+barchartGC(~result + Sex,data=kRdata, type="percent")
+```
 
-
-
-
+This barchart shows that the frequency of women alive compared to men being alive is greater, and women dying compared to men dying is a lesser frequency.  
 
   
 ## Numerical results
 
+```{r}
+table1 <- xtabs(~result + sex, data=kRdata)
+rowPerc(table1)
+colPerc(table1)
+```
+
+The numerical summary shows that women are 12% more in amount than men, and men died 28% more in value.  
 
 ## Inferential results 
 
+```{r}
+chisq.test(table1)
+chisqtestGC(table1)
+fisher.test(table1)
+```
 
+The p-value for the Chi-squared test is 0.001. so we reject the null hypothesis.  
 
+The Fisher exact test shows that men are 2.3 times more likely to die than women in Korea.  
 
 ## Conclusions
 
+The original question was, is there a relationship between sex and deaths in Korea due to Covid. The p-value was 0.001 Chi-squared test, meaning that deaths caused by Covid in Korea is not independent of gender.The Fisher test shows that men are 2.3 times more likely to die from Covid compared to women in Korea. There is a relationship between gender of sex, and the amount of deaths in Korea during or due to Covid.  
